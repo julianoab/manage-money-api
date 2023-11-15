@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,9 +37,14 @@ public class PessoaResource {
 	@Autowired
 	private PessoaService pessoaService;
 	
-	@GetMapping
+	@GetMapping("/listar-todas")
 	public List<Pessoa> listar() {
 		return pessoaRepository.findAll();
+	}
+	
+	@GetMapping
+	public Page<Pessoa> pesquisar(String nome, Pageable pageable) {
+		return pessoaRepository.filtrar(nome, pageable);
 	}
 	
 	@Autowired
