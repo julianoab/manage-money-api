@@ -1,5 +1,7 @@
 package com.example.algamoneyapi.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,9 @@ public class PessoaService {
 	}
 	
 	public Pessoa buscarPessoaPeloCodigo(Long codigo) {
-		Pessoa pessoaSalva = pessoaRepository.findOne(codigo);
+		Optional<Pessoa> pessoaSalva = pessoaRepository.findById(codigo);
 		//.orElseThrow(() -> new EmptyResultDataAccessException(1));
-		return pessoaSalva;
+		return pessoaSalva.get();
 	}
 	
 }

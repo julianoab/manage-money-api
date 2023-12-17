@@ -45,7 +45,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 	private Predicate[] criarRetricoes(LancamentoFilter lancamentoFilter, CriteriaBuilder builder,
 			Root<Lancamento> root) {
 		
-		List<Predicate> predicates = new ArrayList<>();
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		
 		if (!StringUtils.isEmpty(lancamentoFilter.getDescricao()) ) {
 			predicates.add(builder.like(builder.lower(root.get(Lancamento_.descricao)), "%" + lancamentoFilter.getDescricao().toLowerCase() + "%"));

@@ -46,8 +46,8 @@ public class CategoriaResource {
 	}
 
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
-		Optional<Categoria> categoria = Optional.of(categoriaRepository.findOne(codigo));
+	public ResponseEntity<? extends Object> buscarPeloCodigo(@PathVariable Long codigo) {
+		Optional<Optional<Categoria>> categoria = Optional.of(categoriaRepository.findById(codigo));
 
 		return categoria.isPresent() ? ResponseEntity.ok(categoria.get()) : ResponseEntity.notFound().build();
 

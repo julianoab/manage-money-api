@@ -2,6 +2,7 @@ package com.example.algamoneyapi.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,18 @@ public class LancamentoService {
 	private LancamentoRepository lancamentoRepository;
 
 	public Lancamento salvar(Lancamento lancamento) {
-		Optional<Pessoa> pessoa = Optional.of(pessoaRepository.findOne(lancamento.getPessoa().getCodigo()));
+		Optional<Pessoa> pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo());
 		if (pessoa.get() == null || pessoa.get().isInativo()) {
 	         throw new PessoaInexistenteOuInativaException();
 		}
 		
 		return lancamentoRepository.save(lancamento);
+	}
+
+	public Lancamento atualizar(Lancamento lancamento) {
+		Optional<Lancamento> lancamentoPersistido = lancamentoRepository.findById(lancamento.getCodigo());
+		BeanUtils.copyProperties(lancamento, lancamentoPersistido, "codigo");
+		return lancamentoRepository.save(lancamentoPersistido.get());
 	}
 
 }
