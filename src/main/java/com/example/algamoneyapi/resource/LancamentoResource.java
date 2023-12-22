@@ -93,8 +93,12 @@ public class LancamentoResource {
 	
 	@PutMapping
 	public ResponseEntity<Lancamento> atualizar(@Valid @RequestBody Lancamento lancamento) {
-		Lancamento lancamentoSalvo = lancamentoService.atualizar(lancamento);
-		return ResponseEntity.ok(lancamentoSalvo);
+		try {
+			Lancamento lancamentoSalvo = lancamentoService.atualizar(lancamento);
+			return ResponseEntity.ok(lancamentoSalvo);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 }

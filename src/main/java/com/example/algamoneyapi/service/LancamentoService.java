@@ -29,9 +29,14 @@ public class LancamentoService {
 		
 		return lancamentoRepository.save(lancamento);
 	}
-
+	
+	//TODO: Validar se a pessoa alterada está ativa
+	
 	public Lancamento atualizar(Lancamento lancamento) {
 		Optional<Lancamento> lancamentoPersistido = lancamentoRepository.findById(lancamento.getCodigo());
+		if (!lancamentoPersistido.isPresent()) {
+			throw new IllegalArgumentException("Lancamento não encontrado");
+		}
 		BeanUtils.copyProperties(lancamento, lancamentoPersistido, "codigo");
 		return lancamentoRepository.save(lancamentoPersistido.get());
 	}
